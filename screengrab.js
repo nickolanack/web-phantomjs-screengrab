@@ -1,8 +1,9 @@
 /**
  * 
  */
-
-console.log(JSON.stringify(phantom.args));
+var system = require('system');
+var args = system.args;
+console.log(JSON.stringify(args));
 
 phantom.exit(0);
 var page = require('webpage').create();

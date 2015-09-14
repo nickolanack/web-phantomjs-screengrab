@@ -36,6 +36,8 @@ HTML('document',
                             }, $lines);
                         
                         echo implode("<br/>", $sites);
+                        echo shell_exec(
+                            'phantomjs ' . __DIR__ . '/vendor/nickolanack/web-phantomjs-screengrab/screengrab.js');
                     }
                 ));
         }
