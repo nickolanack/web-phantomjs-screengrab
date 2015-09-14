@@ -1,0 +1,11 @@
+    "name": "nickolanack/web-phantomjs-screengrab",
+    "description": "a web interface for monitoring sites using web-phantomjs-screengrab",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nickolanack",
+            "email": "nickblackwell82@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
