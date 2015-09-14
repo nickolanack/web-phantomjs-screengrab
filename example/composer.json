@@ -1,0 +1,26 @@
+{
+    "name": "nickolanack/w-phantomjs-example",
+    "description": "a web interface for monitoring sites using web-phantomjs-screengrab",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nickolanack",
+            "email": "nickblackwell82@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+	"repositories": [
+        {
+            "type": "git",
+            "url": "git://github.com/nickolanack/web-phantomjs-screengrab.git"
+        },
+	{
+            "type": "git",
+            "url": "git://github.com/nickolanack/Scaffolds.git"
+        }
+    ],
+    "require": {
+	"nickolanack/web-phantomjs-screengrab":"dev-master",
+	"nickolanack/scaffolds":"dev-master"
+    }
+}
