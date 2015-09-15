@@ -33,9 +33,11 @@ HTML('document',
                                 $s = explode('(', $s);
                                 $site = trim($s[0]);
                                 
+                                $url = $protocol . '://' . $site;
+                                
                                 $folder = $protocol . '.' . $site;
                                 if (file_exists(__DIR__ . '/' . $folder)) {
-                                    array_walk(scandir(__DIR__ . '/' . $folder), 
+                                    array_walk(array_unique(scandir(__DIR__ . '/' . $folder)), 
                                         function ($file) use($folder) {
                                             
                                             if (substr($file, -4) === '.png') {
@@ -44,19 +46,32 @@ HTML('document',
 	src="<?php echo $folder.'/'.$file; ?>" /><?php
                                             }
                                         });
+                                } else {
+                                    
+                                    $pcmd = 'phantomjs ' . __DIR__ .
+                                         '/vendor/nickolanack/web-phantomjs-screengrab/screengrab.js ' .
+                                         escapeshellarg($url) . ' >/dev/null 2>&1 &';
+                                    
+                                    // echo $pcmd . '<br/>';
+                                    
+                                    shell_exec($pcmd);
                                 }
                                 
-                                return $protocol . '://' . $site;
+                                return $url;
                             }, array_values($lines));
                         
                         // echo implode("<br/>", $sites) . '<br/>';
-                        
-                        $pcmd = 'phantomjs ' . __DIR__ . '/vendor/nickolanack/web-phantomjs-screengrab/screengrab.js ' .
-                             escapeshellarg($sites[0]);
-                        
-                        echo $pcmd . '<br/>';
-                        
-                        echo shell_exec($pcmd);
+                        array_walk($sites, 
+                            function ($site) {
+                                
+                                $pcmd = 'phantomjs ' . __DIR__ .
+                                     '/vendor/nickolanack/web-phantomjs-screengrab/screengrab.js ' .
+                                     escapeshellarg($site) . ' >/dev/null 2>&1 &';
+                                
+                                // echo $pcmd . '<br/>';
+                                
+                                shell_exec($pcmd);
+                            });
                     }
                 ));
         }

@@ -17,34 +17,35 @@ folder=siteurl.replace('://','.');
 
 var page = require('webpage').create();
 page.open(siteurl, function(status) {
-  console.log("Status: " + status);
-  if(status === "success") {
- 
-	page.zoomFactor = 0.25;
-	  
-    var render=function(size){
-        
-	page.viewportSize = size;
-        page.render(folder+'/page'+size.width+'x'+size.height+'.png');
+	console.log("Status: " + status);
+	if(status === "success") {
 
-	page.viewportSize = {width:size.height, height:size.width};
-	page.render(folder+'/page'+size.height+'x'+size.width+'.png');	
+		page.zoomFactor = 0.25;
 
-   }
+		var render=function(dim){
+			var size={width:Math.round(dim.width*page.zoomFactor), height:Math.round(dim.height*page.zoomFactor)}
 
-    setTimeout(function(){
-      
-	render({ width: 768, height: 1024 });
-	render({ width: 640, height: 980 });
+			page.viewportSize = size;
+			page.render(folder+'/page'+size.width+'x'+size.height+'.png');
 
-      phantom.exit();
+			page.viewportSize = {width:size.height, height:size.width};
+			page.render(folder+'/page'+size.height+'x'+size.width+'.png');	
+
+		}
+
+		setTimeout(function(){
+
+			render({ width: 768, height: 1024 });
+			render({ width: 640, height: 980 });
+
+			phantom.exit();
 
 
 
-   },5000);
-    
-  }else{
-  	phantom.exit();
-  }
+		},5000);
+
+	}else{
+		phantom.exit();
+	}
 
 });
