@@ -3,21 +3,32 @@
  */
 var system = require('system');
 var args = system.args;
-console.log(JSON.stringify(args));
+//console.log(JSON.stringify(args));
+//phantom.exit(0);
 
-phantom.exit(0);
+if(args.length!=2){
+	console.error("requires url argument")
+	phantom.exit(1);
+}
+
+siteurl=args[1];
+
+folder=siteurl.replace('://','.');
+
 var page = require('webpage').create();
-page.open('http://sitename', function(status) {
+page.open(siteurl, function(status) {
   console.log("Status: " + status);
   if(status === "success") {
  
+	page.zoomFactor = 0.25;
+	  
     var render=function(size){
         
 	page.viewportSize = size;
-        page.render('page'+size.width+'x'+size.height+'.png');
+        page.render(folder+'/page'+size.width+'x'+size.height+'.png');
 
 	page.viewportSize = {width:size.height, height:size.width};
-	page.render('page'+size.height+'x'+size.width+'.png');	
+	page.render(folder+'/page'+size.height+'x'+size.width+'.png');	
 
    }
 

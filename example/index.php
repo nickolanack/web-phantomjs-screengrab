@@ -32,12 +32,31 @@ HTML('document',
                                 $s = $parts[1];
                                 $s = explode('(', $s);
                                 $site = trim($s[0]);
+                                
+                                $folder = $protocol . '.' . $site;
+                                if (file_exists(__DIR__ . '/' . $folder)) {
+                                    array_walk(scandir(__DIR__ . '/' . $folder), 
+                                        function ($file) use($folder) {
+                                            
+                                            if (substr($file, -4) === '.png') {
+                                                
+                                                ?><img
+	src="<?php echo $folder.'/'.$file; ?>" /><?php
+                                            }
+                                        });
+                                }
+                                
                                 return $protocol . '://' . $site;
-                            }, $lines);
+                            }, array_values($lines));
                         
-                        echo implode("<br/>", $sites);
-                        echo shell_exec(
-                            'phantomjs ' . __DIR__ . '/vendor/nickolanack/web-phantomjs-screengrab/screengrab.js');
+                        // echo implode("<br/>", $sites) . '<br/>';
+                        
+                        $pcmd = 'phantomjs ' . __DIR__ . '/vendor/nickolanack/web-phantomjs-screengrab/screengrab.js ' .
+                             escapeshellarg($sites[0]);
+                        
+                        echo $pcmd . '<br/>';
+                        
+                        echo shell_exec($pcmd);
                     }
                 ));
         }
