@@ -53,7 +53,6 @@ HTML('document',
                                          escapeshellarg($url) . ' >/dev/null 2>&1 &';
                                     
                                     // echo $pcmd . '<br/>';
-                                    
                                     shell_exec($pcmd);
                                 }
                                 
