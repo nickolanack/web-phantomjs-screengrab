@@ -4,7 +4,23 @@ include_once __DIR__ . '/vendor/nickolanack/scaffolds/scaffolds/defines.php';
 HTML('document', 
     array(
         'title' => 'Site Monitor - Phantom',
-        'header' => function () {},
+        'header' => function () {
+            
+            ?>
+<style type="text/css">
+.thumb-cntnr {
+	float: left;
+	height: 220px;
+	margin: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+	overflow: hidden;
+	width: 256px;
+}
+</style>
+
+<?php
+        },
         'body' => function () {
             
             HTML('article', 
@@ -37,15 +53,28 @@ HTML('document',
                                 
                                 $folder = $protocol . '.' . $site;
                                 if (file_exists(__DIR__ . '/' . $folder)) {
-                                    array_walk(array_unique(scandir(__DIR__ . '/' . $folder)), 
-                                        function ($file) use($folder) {
-                                            
-                                            if (substr($file, -4) === '.png') {
-                                                
-                                                ?><img
-	src="<?php echo $folder.'/'.$file; ?>" /><?php
-                                            }
-                                        });
+                                    
+                                    if (file_exists(__DIR__ . '/' . $folder . '/page256x192.png')) {
+                                        
+                                        ?><div class="thumb-cntnr">
+	<a href="<?php echo $url?>" target="_blank"> <img
+		src="<?php echo $folder.'/page256x192.png'; ?>" />
+	</a>
+</div><?php
+                                    }
+                                    
+                                    /*
+                                     * array_walk(array_unique(scandir(__DIR__ . '/' . $folder)),
+                                     * function ($file) use($folder) {
+                                     *
+                                     * if (substr($file, - 4) === '.png') {
+                                     *
+                                     * ?><img
+                                     * src="<?php echo $folder.'/'.$file; ?>" /><?php
+                                     * }
+                                     * });
+                                     *
+                                     */
                                 } else {
                                     
                                     $pcmd = 'phantomjs ' . __DIR__ .

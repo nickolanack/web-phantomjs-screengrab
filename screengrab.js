@@ -13,7 +13,7 @@ if(args.length<2){
 
 var siteurl=args[1];
 
-var folder=siteurl.replace('://','.').replace(/[/]/g,'-');
+var folder=siteurl.replace('://','.').replace(/[/#,]/g,'-');
 var out='';
 if(args.length>2){
 	out=args[2];
