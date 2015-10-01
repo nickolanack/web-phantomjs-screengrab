@@ -6,15 +6,23 @@ var args = system.args;
 //console.log(JSON.stringify(args));
 //phantom.exit(0);
 
-if(args.length!=2){
+if(args.length<2){
 	console.error("requires url argument")
 	phantom.exit(1);
 }
 
-siteurl=args[1];
+var siteurl=args[1];
 
-folder=siteurl.replace('://','.');
+var folder=siteurl.replace('://','.').replace(/[/]/g,'-');
+var out='';
+if(args.length>2){
+	out=args[2];
+	if(out.slice(-1)!='/'){
+		out=out+'/';
+	}
+}
 
+//console.log('folder name: '+folder);
 var page = require('webpage').create();
 page.open(siteurl, function(status) {
 	console.log("Status: " + status);
@@ -26,10 +34,10 @@ page.open(siteurl, function(status) {
 			var size={width:Math.round(dim.width*page.zoomFactor), height:Math.round(dim.height*page.zoomFactor)}
 
 			page.viewportSize = size;
-			page.render(folder+'/page'+size.width+'x'+size.height+'.png');
+			page.render(out+folder+'/page'+size.width+'x'+size.height+'.png');
 
 			page.viewportSize = {width:size.height, height:size.width};
-			page.render(folder+'/page'+size.height+'x'+size.width+'.png');	
+			page.render(out+folder+'/page'+size.height+'x'+size.width+'.png');	
 
 		}
 
@@ -49,3 +57,4 @@ page.open(siteurl, function(status) {
 	}
 
 });
+
